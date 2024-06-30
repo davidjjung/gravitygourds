@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.MelonBlock;
 import net.minecraft.world.level.block.StemGrownBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(MelonBlock.class)
@@ -32,8 +31,7 @@ public abstract class MelonBlockMixin extends StemGrownBlock implements Fallable
     }
 
     private static boolean isFree(BlockState p_53242_) {
-        Material material = p_53242_.getMaterial();
-        return p_53242_.isAir() || p_53242_.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+        return p_53242_.isAir() || p_53242_.is(BlockTags.FIRE) || p_53242_.liquid() || p_53242_.canBeReplaced();
     }
 
     public void onPlace(BlockState p_53233_, Level p_53234_, BlockPos p_53235_, BlockState p_53236_, boolean p_53237_) {

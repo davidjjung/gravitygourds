@@ -57,7 +57,7 @@ public abstract class FallingBlockEntityMixin extends Entity {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/FallingBlockEntity;callOnBrokenAfterFall(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos;)V"),
             locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void slice(CallbackInfo ci, Block block, BlockPos pos) {
-        Level level = this.getLevel();
+        Level level = this.level();
         if (!(level instanceof ServerLevel server)) return;
         if (level.getBlockState(pos).is(GGBlockTags.POINTY)) {
             if (block instanceof MelonBlock) {
@@ -72,7 +72,7 @@ public abstract class FallingBlockEntityMixin extends Entity {
 
     @Unique
     private void gravitygourds$handleMelonBlock(ServerLevel server, BlockPos pos) {
-        level.playSound(null, pos, GGSoundEvents.GOURD_SQUISH.get(), SoundSource.BLOCKS, SQUISH_VOL, SQUISH_PITCH);
+        level().playSound(null, pos, GGSoundEvents.GOURD_SQUISH.get(), SoundSource.BLOCKS, SQUISH_VOL, SQUISH_PITCH);
         BlockParticleOption chunks = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.RED_CONCRETE.defaultBlockState()).setPos(pos);
         BlockParticleOption melon = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MELON.defaultBlockState()).setPos(pos);
         server.sendParticles(chunks, this.getX(), this.getY(), this.getZ(), MELON_PARTICLE_COUNT, 0, PARTICLE_SPEED, 0, PARTICLE_OFFSET);
@@ -85,17 +85,17 @@ public abstract class FallingBlockEntityMixin extends Entity {
         int day = localdate.getDayOfMonth();
         int month = localdate.getMonth().getValue();
         if (gravitygourds$isHalloween(day, month)) {
-            level.playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level().playSound(null, pos, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F);
             gravitygourds$handleHalloweenPumpkin(server, pos, ci);
         } else if (ModList.get().isLoaded("farmersdelight")) {
-            level.playSound(null, pos, GGSoundEvents.GOURD_SQUISH.get(), SoundSource.BLOCKS, SQUISH_VOL, SQUISH_PITCH);
+            level().playSound(null, pos, GGSoundEvents.GOURD_SQUISH.get(), SoundSource.BLOCKS, SQUISH_VOL, SQUISH_PITCH);
             gravitygourds$handleFarmerDelightPumpkin(server, pos, ci);
         }
     }
 
     @Unique
     private boolean gravitygourds$isHalloween(int day, int month) {
-        return month == 10 && day == 31 && this.level.getRandom().nextFloat() < 0.35F;
+        return month == 10 && day == 31 && this.level().getRandom().nextFloat() < 0.35F;
     }
 
     @Unique
@@ -115,7 +115,7 @@ public abstract class FallingBlockEntityMixin extends Entity {
         ItemStack stack = GGConstants.pumpkinSlice;
         if (stack != null) {
             stack.setCount(GGConfig.COMMON.sliceNumber.get());
-            if (this.level.getRandom().nextDouble() < GGConfig.COMMON.bonusChance.get()) {
+            if (this.level().getRandom().nextDouble() < GGConfig.COMMON.bonusChance.get()) {
                 stack.setCount(stack.getCount() + GGConfig.COMMON.bonusNumber.get());
             }
             spawnAtLocation(stack);
