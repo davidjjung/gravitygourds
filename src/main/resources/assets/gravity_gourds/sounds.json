@@ -1,0 +1,12 @@
+{
+  "block.gourd_squish": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "gravity_gourds:block/gourd_squish",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.gravity_gourds.block.gourd_squish"
+  }
+}
