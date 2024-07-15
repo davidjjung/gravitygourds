@@ -19,7 +19,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.ModList;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,9 +34,10 @@ import java.time.LocalDate;
 
 import static net.minecraft.world.level.block.Block.dropResources;
 
-@Mixin(FallingBlockEntity.class)
+@Mixin(targets = "net.minecraft.world.entity.item.FallingBlockEntity")
 public abstract class FallingBlockEntityMixin extends Entity {
-    @Shadow private BlockState blockState;
+    @Shadow
+    private BlockState blockState;
     @Unique
     private static final int MELON_PARTICLE_COUNT = 28;
     @Unique
@@ -52,6 +55,11 @@ public abstract class FallingBlockEntityMixin extends Entity {
 
     public FallingBlockEntityMixin(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
+    }
+
+    private FallingBlockEntityMixin(Level p_31953_, double p_31954_, double p_31955_, double p_31956_, BlockState p_31957_) {
+        this(EntityType.FALLING_BLOCK, p_31953_);
+        this.blockState = p_31957_;
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/FallingBlockEntity;callOnBrokenAfterFall(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos;)V"),
