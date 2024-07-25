@@ -4,6 +4,7 @@ import com.davigj.gravity_gourds.core.GGConfig;
 import com.davigj.gravity_gourds.core.other.GGBlockTags;
 import com.davigj.gravity_gourds.core.other.GGConstants;
 import com.davigj.gravity_gourds.core.registry.GGSoundEvents;
+import com.teamabnormals.blueprint.common.entity.BlueprintFallingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -34,7 +35,8 @@ import static net.minecraft.world.level.block.Block.dropResources;
 
 @Mixin(FallingBlockEntity.class)
 public abstract class FallingBlockEntityMixin extends Entity {
-    @Shadow private BlockState blockState;
+    @Shadow public abstract BlockState getBlockState();
+
     @Unique
     private static final int MELON_PARTICLE_COUNT = 28;
     @Unique
@@ -64,7 +66,7 @@ public abstract class FallingBlockEntityMixin extends Entity {
                 gravitygourds$handleMelonBlock(server, pos);
                 dropResources(block.defaultBlockState(), level, pos.above(), null);
                 ci.cancel();
-            } else if (block instanceof PumpkinBlock || this.blockState.is(GGConstants.largePumpkinSlice)) {
+            } else if (block instanceof PumpkinBlock || this.getBlockState().is(GGConstants.largePumpkinSlice)) {
                 gravitygourds$handlePumpkinBlock(server, pos, ci);
             }
         }

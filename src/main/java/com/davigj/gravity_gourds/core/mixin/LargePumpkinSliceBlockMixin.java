@@ -1,5 +1,6 @@
 package com.davigj.gravity_gourds.core.mixin;
 
+import com.davigj.gravity_gourds.core.GGConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -48,6 +49,9 @@ public abstract class LargePumpkinSliceBlockMixin extends Block implements Falla
         }
     }
 
-    protected void falling(FallingBlockEntity p_53206_) {
+    protected void falling(FallingBlockEntity falling) {
+        if (GGConfig.COMMON.gourdsHurt.get()) {
+            falling.setHurtsEntities(1.0F, 20);
+        }
     }
 }
