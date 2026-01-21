@@ -5,10 +5,11 @@
   "minVersion": "0.8",
   "refmap": "gravity_gourds.refmap.json",
   "mixins": [
+    "BlockBehaviourMixin",
+    "BlueprintFallingBlockEntityMixin",
     "FallingBlockEntityMixin",
-    "LargePumpkinSliceBlockMixin",
-    "MelonBlockMixin",
-    "PumpkinBlockMixin"
+    "GourdnutBlockMixin",
+    "IBlockBehaviourAccessor"
   ],
   "client": [
   ],

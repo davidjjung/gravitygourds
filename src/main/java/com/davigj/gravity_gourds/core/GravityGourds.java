@@ -1,48 +1,43 @@
 package com.davigj.gravity_gourds.core;
 
-import com.davigj.gravity_gourds.core.other.GGCompat;
+import com.davigj.gravity_gourds.core.other.GGPistonOverrides;
+import com.davigj.gravity_gourds.core.registry.GGSoundEvents;
 import com.teamabnormals.blueprint.core.util.registry.RegistryHelper;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(GravityGourds.MOD_ID)
 public class GravityGourds {
     public static final String MOD_ID = "gravity_gourds";
     public static final RegistryHelper REGISTRY_HELPER = new RegistryHelper(MOD_ID);
 
-    public GravityGourds() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext context = ModLoadingContext.get();
-        MinecraftForge.EVENT_BUS.register(this);
-
-		REGISTRY_HELPER.register(bus);
+    public GravityGourds(IEventBus bus, ModContainer container) {
+        GGSoundEvents.SOUNDS.register(bus);
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
         bus.addListener(this::dataSetup);
-        context.registerConfig(ModConfig.Type.COMMON, GGConfig.COMMON_SPEC);
+
+        container.registerConfig(ModConfig.Type.COMMON, GGConfig.COMMON_SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            GGCompat.init();
-        });
+        event.enqueueWork(GGPistonOverrides::init);
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-
-        });
     }
 
     private void dataSetup(GatherDataEvent event) {
+    }
 
+    public static ResourceLocation location(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 }

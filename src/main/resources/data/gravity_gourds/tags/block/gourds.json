@@ -1,0 +1,22 @@
+{
+  "values": [
+    "minecraft:pumpkin",
+    "minecraft:melon",
+    {
+      "required": false,
+      "id": "autumnity:large_pumpkin_slice"
+    },
+    {
+      "required": false,
+      "id": "atmospheric:yucca_bundle"
+    },
+    {
+      "required": false,
+      "id": "atmospheric:roasted_yucca_bundle"
+    },
+    {
+      "required": false,
+      "id": "abundant_atmosphere:gourdnut"
+    }
+  ]
+}

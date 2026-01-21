@@ -1,0 +1,40 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+issueTrackerURL = "https://github.com/davidjjung/gravitygourds/issues"
+license = "MIT License"
+
+[[mixins]]
+config = "gravity_gourds.mixins.json"
+
+[[mods]]
+modId = "gravity_gourds"
+version = "${mod_version}"
+logoFile = "logo.png"
+itemIcon = "minecraft:pumpkin"
+configBackground = "minecraft:textures/block/melon_side.png"
+authors = "DavigJ"
+credits = "Freshah"
+displayURL = "https://modrinth.com/project/gravity-gourds"
+displayName = "Gravity, Gourds, & You"
+description = '''Melons and pumpkins are affected by gravity, splitting into slices upon landing on a pointy block.'''
+
+[[dependencies.gravity_gourds]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${mc_version}]"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.gravity_gourds]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.gravity_gourds]]
+modId = "blueprint"
+type = "required"
+versionRange = "[${blueprint},)"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,6 +1,5 @@
 {
   "block.gourd_squish": {
-    "category": "player",
     "sounds": [
       {
         "name": "gravity_gourds:block/gourd_squish",
